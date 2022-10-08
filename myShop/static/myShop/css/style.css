@@ -1,0 +1,189 @@
+.info{
+	font-style:italic ;
+	}
+ul li{
+
+	font-size: large;
+}
+ol li{
+
+	font-size: large;
+}
+
+
+.mb-4{
+	margin-bottom: -0.5rem!important;
+}
+
+html, body{
+	height: 100%;
+	max-height: 100%;
+	font-family: 'Roboto', sans-serif;
+	background-color: #edeef0;
+	font-size:14px;
+
+}
+
+.section-top{
+	margin: 0px;
+}
+
+.product-item{
+	height: 360px;
+	width: 300px;
+	background: white;
+	border: 1px solid lightgrey;
+	position: relative;
+	margin-bottom: 10px;
+	margin-top: 20px;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.add-to-card-btn{
+	position: absolute;
+	bottom: 5px;
+	width: 200px;
+	left: 50%;
+	margin-left: -100px;
+
+}
+
+.img-responsive{
+	margin-bottom: 5px;
+	min-height: 100%;
+	--ratio: 100 / 740;
+  	--container-width: 30em;
+  	display: block;
+  /**
+	!height: calc(100vw * var(--ratio));
+ */
+}
+
+h1{
+	font-size: 26px;
+}
+
+h2{
+	text-align: center;
+}
+
+.section{
+    padding: 50px 0;
+}
+
+.section h1{
+    margin-bottom: 40px;
+}
+
+.wrapper-content{
+	overflow: auto;
+	padding-bottom: 180px;
+}
+
+.wrapper{
+    min-height: 100%;
+}
+
+.footer{
+	position: relative;
+	margin-top: -180px;
+	background-color: white;
+	height: 160px;
+	clear: both;
+}
+
+.discount-container{
+	position: absolute;
+    background: red;
+    top: 0px;
+    font-weight: 700;
+    width: 30%;
+	left: 0%
+}
+
+.sale-delivery{
+	height: 300px;
+	background: seagreen;
+	text-align: center;
+	color: aliceblue;
+}
+
+.tab-content{
+	font-size: 20px;
+}
+
+.text-center{
+	margin-top: 20px;
+}
+
+.col-lg-6{
+	font-size: 20px;
+	top:8px;
+}
+
+
+.tab-content product-info-tabs{
+	padding: 10px;
+}
+
+.authorization-container{
+	font-size:16px;
+}
+
+.navbar-top{
+	height:30px;
+	background-color: darkgreen;
+	min-height: 10px;
+	border: none;
+}
+.navbar{
+	border-radius: 0;
+	border: none;
+}
+
+.basket-container{
+	position:relative;
+	top:3px;
+	width: 500px ;
+	padding: 15px 10px;
+}
+
+.navbar-basket{
+	position: absolute;
+	padding: 15px;
+	top:40px;
+	width: 100%;
+	background-color: #9c8c2e;
+}
+
+a.a_class2{
+	color:yellow;
+}
+
+a.class3{
+	color:white;
+}
+
+.product-categories{
+	position: absolute;
+	padding: 15px;
+	top:40px;
+	width: 100%;
+	background-color: #9c8c2e;
+}
+
+.categories-container{
+	position:relative;
+	width: 500px;
+	padding: 15px 10px;
+}
+
+.home-container{
+	position:relative;
+}
+
+.form-error{
+	color: red;
+}

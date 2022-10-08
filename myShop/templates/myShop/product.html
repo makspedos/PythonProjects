@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                {% for image in product.productimage_set.all %}
+                    <img src="{{ image.product_image.url }}" class="img-responsive">
+                {% endfor %}
+            </div>
+            <div class="col-lg-6">
+                <h1 class="text-center">
+                    {{ product.product_name }}
+                </h1>
+                <div class="price-container">
+                    <p>
+                        Price:{{ product.price }}
+                    </p>
+                </div>
+                <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role= "presentation" class="active">
+                            <a href="#product_info" aria-controls="home" role="tab" data-toggle="tab">
+                                Descriptions
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#size" aria-controls="profile" role="tab" data-toggle="tab">
+                                Size
+                            </a>
+                        </li>
+
+                    </ul>
+
+                      <!-- Tab panes -->
+                    <div class="tab-content product-info-tabs">
+                        <div role="tabpanel" class="tab-pane active" id="product_info">
+                            {{ product.product_info }}
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="size">
+                            Size of the foot:
+                            {{ product.size }}
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <form id="form_buying_product" class="form-inline" action="{% url 'myShop:basket' %}">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="number" class="form-control" name = "num" id="num">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="submit-btn"  class="btn btn-success btn-buy"
+                                data-product_id = "{{ product.product_id }}"
+                                data-product_name = "{{ product.product_name }}"
+                                data-product_price = "{{ product.price }}"
+                                    >
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

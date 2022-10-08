@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="section-top">
+        <img src="{% static 'images/slider4.jpg' %}" class="img-responsive">
+    </div>
+    <div class="section section1">
+        <div class="container">
+            <div class="row">
+             <div class="col-lg-12">
+                <h1 class="text-center">
+                    New shoes
+                </h1>
+            </div>
+                {% for product_images in products_images %}
+                    {% if product_images.product.category.category_id == 2 %}
+                        {% include 'product_item.html' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section sale-delivery">
+        <div>
+            <h3>Free delivery today</h3>
+        </div>
+    </div>
+
+
+    <div class="section section2">
+        <div class="container">
+            <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center">
+                    New socks
+                </h1>
+            </div>
+                {% for product_images in products_images %}
+                    {% if product_images.product.category.category_id == 4 %}
+                        {% include 'product_item.html' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
