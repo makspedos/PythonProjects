@@ -5,19 +5,43 @@
     <div class="section-top">
         <img src="{% static 'images/slider4.jpg' %}" class="img-responsive">
     </div>
+
+            <div class="col-lg-2 mx-auto">
+                <div class="list-group">
+                    <a href="/" class="list-group-item list-group-item-action btn btn-outline-success">All Products</a>
+                    {% for category in categories %}
+                    <a href="/?category={{category.category_id}}"
+                        class="list-group-item list-group-item-action btn btn-outline-success ">{{category.name}}</a>
+                    {% endfor %}
+                </div>
+
+                <div class="list-group">
+                    <a href="/" class="list-group-item list-group-item-action btn btn-outline-success">All Products</a>
+                    {% for brand in list_of_brands %}
+                    <a href="/?brand={{brand}}"
+                        class="list-group-item list-group-item-action btn btn-outline-success ">{{brand}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+
+
+
     <div class="section section1">
         <div class="container">
             <div class="row">
              <div class="col-lg-12">
                 <h1 class="text-center">
-                    New shoes
+                    Products
                 </h1>
             </div>
                 {% for product_images in products_images %}
-                    {% if product_images.product.category.category_id == 2 %}
+                    <div class="card mx-auto mb-3" id={{products_images.product.id}} style="width: 18rem;">
                         {% include 'product_item.html' %}
-                    {% endif %}
+                    </div>
                 {% endfor %}
+            </div>
             </div>
         </div>
     </div>
@@ -30,21 +54,5 @@
     </div>
 
 
-    <div class="section section2">
-        <div class="container">
-            <div class="row">
-            <div class="col-lg-12">
-                <h1 class="text-center">
-                    New socks
-                </h1>
-            </div>
-                {% for product_images in products_images %}
-                    {% if product_images.product.category.category_id == 4 %}
-                        {% include 'product_item.html' %}
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
     {% endblock %}
 

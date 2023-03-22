@@ -56,9 +56,6 @@ html, body{
 	--ratio: 100 / 740;
   	--container-width: 30em;
   	display: block;
-  /**
-	!height: calc(100vw * var(--ratio));
- */
 }
 
 h1{
@@ -88,7 +85,7 @@ h2{
 
 .footer{
 	position: relative;
-	margin-top: -180px;
+	margin-top: -160px;
 	background-color: white;
 	height: 160px;
 	clear: both;
@@ -154,7 +151,7 @@ h2{
 	position: absolute;
 	padding: 15px;
 	top:40px;
-	width: 100%;
+	width: 90%;
 	background-color: #9c8c2e;
 }
 

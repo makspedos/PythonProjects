@@ -74,60 +74,6 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
-class Admin(models.Model):
-    identifical_code = models.IntegerField(primary_key=True)
-    contact_email = models.CharField(max_length=20)
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        managed = False
-        db_table = 'admin'
-
-
-class BlackList(models.Model):
-    customer = models.OneToOneField('Customers', models.DO_NOTHING, primary_key=True)
-    reason = models.CharField(max_length=200)
-    date = models.DateTimeField()
-    identifical_code = models.ForeignKey(Admin, models.DO_NOTHING, db_column='identifical_code')
-
-    @admin.display(
-        ordering='date',
-        description='Added'
-    )
-    def name_who_added(self):
-        return self.identifical_code
-
-    def __str__(self):
-        return self.reason
-
-    class Meta:
-        managed = False
-        db_table = 'black_list'
-        verbose_name_plural = 'black_list'
-        unique_together = (('customer', 'identifical_code'),)
-
-
-class Customers(models.Model):
-    customer_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    email = models.CharField(max_length=30,null=True , default=None)
-    address = models.CharField(max_length=20,null=True , default=None)
-    number = models.IntegerField(null=True , default=None)
-
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        managed = True
-        db_table = 'customers'
-        verbose_name_plural = 'customers'
-
-
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
@@ -212,13 +158,30 @@ class Status(models.Model):
         return self.status_name
 
 
+class Customers(models.Model):
+    customer_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    email = models.CharField(max_length=30, null=True, default=None)
+    address = models.CharField(max_length=20, null=True, default=None)
+    number = models.IntegerField(null=True, default=None)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        managed = True
+        db_table = 'customers'
+        verbose_name_plural = 'customers'
+
+
 class Orders(models.Model):
     customer = models.ForeignKey(Customers, on_delete=models.CASCADE, default=None)
-    order_id = models.IntegerField(primary_key=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    order_id = models.AutoField(primary_key=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, default=None)
     payment_type = models.CharField(max_length=20, default='Cash')
     order_timestamp = models.DateTimeField(auto_now_add=True, blank=True)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     delivery_type = models.CharField(max_length=20)
 
     def __str__(self):
@@ -233,7 +196,6 @@ class Orders(models.Model):
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     size = models.FloatField()
-    discount = models.IntegerField(default=0)
     brand = models.CharField(max_length=20)
     amount = models.IntegerField()
     product_info = models.CharField(max_length=100)
@@ -245,6 +207,14 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.product_name)
+
+    @staticmethod
+    def get_all_products_by_categoryid(category_id):
+        if category_id:
+            return Product.objects.filter(category=category_id)
+        else:
+            return Product.objects.all();
+
 
     class Meta:
         managed = True
@@ -284,15 +254,15 @@ class ProductInOrder(models.Model):
     def save(self, *args, **kwargs):
         price_per_item = self.product.price
         self.price_per_item = price_per_item
-        total_price = price_per_item * self.count
+        total_price = price_per_item * int(self.count)
         self.total_price = total_price
 
         return super(ProductInOrder, self).save(*args, **kwargs)
 
 
 class Basket(models.Model):
-    session_key = models.CharField(max_length=128,default=None)
-    order = models.ForeignKey(Orders, on_delete=models.CASCADE,  null=True , default=None)
+    session_key = models.CharField(max_length=128, default=None)
+    order = models.ForeignKey(Orders, on_delete=models.CASCADE, null=True, default=None)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=None)
     count = models.IntegerField(default=1)
     price_per_item = models.DecimalField(max_digits=10, decimal_places=2, default=0)

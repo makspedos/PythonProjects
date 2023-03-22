@@ -17,15 +17,12 @@
     <div class="wrapper">
         <div class="wrapper-content">
             {% include 'navbar.html' %}
-
-
             {% block content %}
 
             {% endblock %}
         </div>
     </div>
     <form id="form_buying_product" class="form-inline" action="{% url 'myShop:basket' %}">{% csrf_token %}</form>
-
 
 {% include 'footer.html' %}
 
@@ -36,5 +33,3 @@
     <script src="{% static 'myShop/js/scripts.js' %}"></script>
 </body>
 </html>
-
-

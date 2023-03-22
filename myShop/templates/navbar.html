@@ -10,7 +10,9 @@
               </li>
           </div>
       </ul>
-</div>
+    </div>
+
+
       <ul class="nav navbar-nav my-2 my-lg-0">
           <li>
               <div class="basket-container">
@@ -24,13 +26,18 @@
                   <div class="navbar-basket hidden">
                     <ul class="">
                         {% for product in products_in_basket %}
-                            <li>{{ product.product.product_name }} + {{ product.count }} amount - COST {{ product.total_price }}
+                            <li>{{ product.product.product_name }} ,{{ product.count }} amount,  {{ product.total_price }} $
                             <a class="delete-item" href="" data-product_id="{{ product.id }}">x</a>
                             </li>
                         {% endfor %}
                     </ul>
                 </div>
               </div>
+          </li>
+      </ul>
+      <ul class="navbar-nav">
+          <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'myShop:checkout'%}">See basket</a>
           </li>
       </ul>
 
