@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
+
+            <div class="col-lg-5">
+            <h1 class="product_name">{{ product.product_name }}</h1>
+
+            <div class="picture-container">
                 {% for image in product.productimage_set.all %}
-                    <img src="{{ image.product_image.url }}" class="img-responsive">
+                    <img src="{{ image.product_image.url }}" width="55%">
                 {% endfor %}
             </div>
+            </div>
+
             <div class="col-lg-6">
-                <h1>
-                    {{ product.product_name }}
-                </h1>
+
                 <div class="price-container">
+                    <h2 class="product_name">Information</h2>
                     <p>
                         Price:{{ product.price }}
                     </p>
@@ -29,7 +32,6 @@
                                 Size
                             </a>
                         </li>
-
                     </ul>
 
                       <!-- Tab panes -->
@@ -47,7 +49,7 @@
                 <div>
                     <form id="form_buying_product" class="form-inline" action="{% url 'myShop:basket' %}">{% csrf_token %}
                         <div class="form-group">
-                            <input type="number" class="form-control" name = "num" id="num">
+                            <input type="number" min="1" class="form-control" name = "num" id="num">
                         </div>
                         <div class="form-group">
                             <button type="submit" id="submit-btn"  class="btn btn-success btn-buy"
@@ -60,7 +62,9 @@
                         </div>
                     </form>
                 </div>
+
+                </div>
+
             </div>
-        </div>
-    </div>
+
 {% endblock %}

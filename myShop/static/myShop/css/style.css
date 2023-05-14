@@ -10,6 +10,40 @@ ol li{
 	font-size: large;
 }
 
+.filters-container {
+  float: left;
+  width: 20%;
+}
+
+.products-container {
+  float: right;
+  width: 80%;
+}
+
+.table{
+	font-size: 18px;
+}
+
+.picture-container {
+  position: relative;
+}
+
+.picture-container img {
+	margin-top:10rem;
+	margin-left: 5rem;
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+.picture-container:hover img {
+  transform: scale(1.5);
+}
+
+.picture-container:hover::after {
+  display: block;
+}
+
 
 .mb-4{
 	margin-bottom: -0.5rem!important;
@@ -24,8 +58,23 @@ html, body{
 
 }
 
+.product_name{
+	font-size: 48px;
+	font-weight: bold;
+	color: #333;
+
+
+  margin: 50px;
+	margin-left: 7rem;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
 .section-top{
 	margin: 0px;
+
+}
+
+.price-container{
+	margin: 50px 0;
 }
 
 .product-item{
@@ -47,7 +96,6 @@ html, body{
 	width: 200px;
 	left: 50%;
 	margin-left: -100px;
-
 }
 
 .img-responsive{
@@ -56,6 +104,7 @@ html, body{
 	--ratio: 100 / 740;
   	--container-width: 30em;
   	display: block;
+	aspect-ratio: auto;
 }
 
 h1{
@@ -163,12 +212,10 @@ a.class3{
 	color:white;
 }
 
-.product-categories{
-	position: absolute;
-	padding: 15px;
-	top:40px;
-	width: 100%;
-	background-color: #9c8c2e;
+a.delete-item{
+	padding: 10px;
+	 position: relative;
+  	z-index: 1;
 }
 
 .categories-container{
@@ -184,3 +231,21 @@ a.class3{
 .form-error{
 	color: red;
 }
+
+.custom-input {
+  padding: 10px;
+  font-size: 16px;
+  color: #555;
+  background: linear-gradient(to right, #f6d365 0%, #fda085 100%);
+  border: none;
+  border-radius: 20px;
+}
+
+.canvas{
+	background-color: #ffffff;
+}
+
+.cross {
+  padding: 10px;
+}
+

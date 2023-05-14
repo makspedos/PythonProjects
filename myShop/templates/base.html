@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{% static 'myShop/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'myShop/css/filter_style.css' %}">
+
+
 </head>
 <body>
 
@@ -20,9 +23,9 @@
             {% block content %}
 
             {% endblock %}
+        <form id="form_buying_product" class="form-inline" action="{% url 'myShop:basket' %}">{% csrf_token %}</form>
         </div>
     </div>
-    <form id="form_buying_product" class="form-inline" action="{% url 'myShop:basket' %}">{% csrf_token %}</form>
 
 {% include 'footer.html' %}
 

@@ -16,7 +16,7 @@
       <ul class="nav navbar-nav my-2 my-lg-0">
           <li>
               <div class="basket-container">
-                  <a href="" class="a_class2">Basket <span id ="basket_total_amount"></span>
+                  <a href="javascript:void(0)" class="a_class2" >Basket <span id ="basket_total_amount"></span>
                       <span id ="basket_total_count">
                         {% if  product_total_count  %}
                             ({{ product_total_count }})
@@ -27,7 +27,7 @@
                     <ul class="">
                         {% for product in products_in_basket %}
                             <li>{{ product.product.product_name }} ,{{ product.count }} amount,  {{ product.total_price }} $
-                            <a class="delete-item" href="" data-product_id="{{ product.id }}">x</a>
+                                <a class="delete-item" href="" data-product_id="{{ product.id }}">X</a>
                             </li>
                         {% endfor %}
                     </ul>

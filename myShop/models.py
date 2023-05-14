@@ -180,9 +180,9 @@ class Orders(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     order_id = models.AutoField(primary_key=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, default=None)
-    payment_type = models.CharField(max_length=20, default='Cash')
+    payment_type = models.CharField(max_length=25, default='Cash')
     order_timestamp = models.DateTimeField(auto_now_add=True, blank=True)
-    delivery_type = models.CharField(max_length=20)
+    delivery_type = models.CharField(max_length=50)
 
     def __str__(self):
         return str(self.order_id)
@@ -193,9 +193,10 @@ class Orders(models.Model):
         verbose_name_plural = 'orders'
 
 
+
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
-    size = models.FloatField()
+    size = models.IntegerField()
     brand = models.CharField(max_length=20)
     amount = models.IntegerField()
     product_info = models.CharField(max_length=100)
@@ -207,15 +208,6 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.product_name)
-
-    @staticmethod
-    def get_all_products_by_categoryid(category_id):
-        if category_id:
-            return Product.objects.filter(category=category_id)
-        else:
-            return Product.objects.all();
-
-
     class Meta:
         managed = True
         db_table = 'product'
@@ -261,7 +253,7 @@ class ProductInOrder(models.Model):
 
 
 class Basket(models.Model):
-    session_key = models.CharField(max_length=128, default=None)
+    session_key = models.CharField(max_length=128,blank=True, null=True, default=None)
     order = models.ForeignKey(Orders, on_delete=models.CASCADE, null=True, default=None)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=None)
     count = models.IntegerField(default=1)
@@ -277,12 +269,13 @@ class Basket(models.Model):
         managed = True
         db_table = 'Basket'
 
-    def save(self, *args, **kwargs):
+    def save(self, is_active=None, *args, **kwargs):
         price_per_item = self.product.price
         self.price_per_item = price_per_item
         total_price = price_per_item * int(self.count)
         self.total_price = total_price
-
+        if is_active is not None:
+            self.is_active=False
         return super(Basket, self).save(*args, **kwargs)
 
 
