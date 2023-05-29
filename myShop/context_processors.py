@@ -5,7 +5,7 @@ def getting_basket_info(request):
     if not session_key:
         request.session.cycle_key()
 
-    products_in_basket = Basket.objects.filter(session_key=session_key, is_active=True)
+    products_in_basket = Basket.objects.filter(session_key=session_key, is_shown=True)
     product_total_count = products_in_basket.count()
 
     return locals()

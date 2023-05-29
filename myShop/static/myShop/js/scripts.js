@@ -31,8 +31,8 @@ $(document).ready(function() {
                         console.log(data.products)
                         $('.navbar-basket ul').html("");
                         $.each(data.products, function(k, v){
-                            $('.navbar-basket ul').append('<li>'+ v.product_name +',\n' + v.count + ' amount\n,'
-                                + v.total_price +'  $ ' +
+                            $('.navbar-basket ul').append('<li>'+ v.product_name +',\n' + v.count + ' кількість\n,'
+                                + v.total_price +'  грн ' +
                             '<a class="delete-item"  href="" data-product_id="' + v.id+ '">X</a>'+ '</li>');
                         })
                     }

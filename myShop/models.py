@@ -1,7 +1,4 @@
-from itertools import product
-
 from django.db import models
-from django.contrib import admin
 from django.db.models.signals import post_save
 
 
@@ -162,9 +159,9 @@ class Customers(models.Model):
     customer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    email = models.CharField(max_length=30, null=True, default=None)
+    email = models.CharField(max_length=30, null=True, unique=True)
     address = models.CharField(max_length=20, null=True, default=None)
-    number = models.IntegerField(null=True, default=None)
+    phone = models.IntegerField(null=True, default=None, unique=True)
 
     def __str__(self):
         return self.name
@@ -192,17 +189,25 @@ class Orders(models.Model):
         db_table = 'orders'
         verbose_name_plural = 'orders'
 
+class Brand(models.Model):
+    brand_name = models.CharField(max_length=40)
 
+    def __str__(self):
+        return str(self.brand_name)
+
+    class Meta:
+        managed = True
+        db_table = 'brand'
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     size = models.IntegerField()
-    brand = models.CharField(max_length=20)
     amount = models.IntegerField()
     product_info = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=18, decimal_places=2)
     product_name = models.CharField(max_length=50)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)  #is_saled
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=True)
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, default=None)
     measured_unit = models.ForeignKey(MeasuredUnit, on_delete=models.CASCADE, default=None)
 
@@ -233,8 +238,7 @@ class ProductInOrder(models.Model):
     count = models.IntegerField(default=1)
     price_per_item = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    is_active = models.BooleanField(default=True)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
 
     def __str__(self):
         return self.product.product_name
@@ -259,7 +263,7 @@ class Basket(models.Model):
     count = models.IntegerField(default=1)
     price_per_item = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    is_active = models.BooleanField(default=True)
+    is_shown = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__(self):
@@ -269,19 +273,19 @@ class Basket(models.Model):
         managed = True
         db_table = 'Basket'
 
-    def save(self, is_active=None, *args, **kwargs):
+    def save(self, is_shown=None, *args, **kwargs):
         price_per_item = self.product.price
         self.price_per_item = price_per_item
         total_price = price_per_item * int(self.count)
         self.total_price = total_price
-        if is_active is not None:
-            self.is_active=False
+        if is_shown is not None:
+            self.is_shown=False
         return super(Basket, self).save(*args, **kwargs)
 
 
 def product_in_order_post_save(instance, **kwargs):
     order = instance.order
-    all_products_in_order = ProductInOrder.objects.filter(order=order, is_active=True)
+    all_products_in_order = ProductInOrder.objects.filter(order=order)
     order_total_price = 0
     for item in all_products_in_order:
         order_total_price += item.total_price

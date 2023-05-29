@@ -1,4 +1,3 @@
-from django.contrib import admin
 from .models import *
 from django.contrib import admin
 
@@ -16,11 +15,10 @@ class ProductInOrderInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
-    list_filter = ['brand']
 
 
 class CustomersAdmin(admin.ModelAdmin):
-    list_display = ('name', 'last_name', 'email', 'number', 'address')
+    list_display = ('name', 'last_name', 'email', 'phone', 'address')
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -34,7 +32,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class BasketAdmin(admin.ModelAdmin):
-    list_display = ('session_key', 'product', 'count', 'price_per_item', 'total_price', 'is_active')
+    list_display = ('session_key', 'product', 'count', 'price_per_item', 'total_price', 'is_shown')
 
 
 class StatusAdmin(admin.ModelAdmin):
@@ -42,13 +40,14 @@ class StatusAdmin(admin.ModelAdmin):
 
 
 class ProductInOrderAdmin(admin.ModelAdmin):
-    list_display = ('order', 'product', 'count', 'total_price', 'is_active')
+    list_display = ('order', 'product', 'count', 'total_price')
 
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Customers, CustomersAdmin)
 admin.site.register(Orders, OrderAdmin)
 admin.site.register(MeasuredUnit)
+admin.site.register(Brand)
 admin.site.register(ProductCategory, CategoryAdmin)
 admin.site.register(Status, StatusAdmin)
 admin.site.register(ProductImage)

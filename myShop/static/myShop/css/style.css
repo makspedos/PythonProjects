@@ -72,6 +72,16 @@ html, body{
 	margin: 0px;
 
 }
+.no_product_basket{
+	font-size: 48px;
+	font-weight: bold;
+	color: #333;
+
+
+	margin: 25px;
+
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
 
 .price-container{
 	margin: 50px 0;
@@ -99,12 +109,13 @@ html, body{
 }
 
 .img-responsive{
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 	min-height: 100%;
 	--ratio: 100 / 740;
   	--container-width: 30em;
   	display: block;
 	aspect-ratio: auto;
+
 }
 
 h1{
