@@ -9,10 +9,6 @@ from .forms import *
 from django.http import JsonResponse, HttpResponse
 
 
-def filter(request):
-    return render(request, 'myShop/filter_products.html')
-
-
 def home(request):
     categories = ProductCategory.objects.all()
     brand = Brand.objects.all()
@@ -143,14 +139,15 @@ def checkout(request):
             data = request.POST
             name = data.get("name", 'user')
             last_name = data.get("last_name", ' ')
-            phone = data["phone"]
+            phone = data.get("phone", '')
             address = data.get("address", ' ')
             email = data['email']
             delivery_type = data['delivery_type']
             payment_type = data.get('payment_type', 'Cash')
-            customer, created = Customers.objects.get_or_create(email=email, phone=phone, defaults={'name': name,
+            customer, created = Customers.objects.get_or_create(email=email,  defaults={'name': name,
                                                                                                     'last_name': last_name,
                                                                                                     'address': address,
+                                                                                                    'phone' : phone,
                                                                                                     })
             order = Orders.objects.create(customer=customer, status_id=2, delivery_type=delivery_type,
                                           payment_type=payment_type  # total_price=price_for_order

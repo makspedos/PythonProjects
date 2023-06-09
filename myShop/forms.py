@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from .models import *
 
@@ -13,7 +15,7 @@ class CheckoutBuyerForm(forms.Form):
 
     name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
-    phone = forms.IntegerField(required=True)
+    phone = forms.CharField(required=True)
     address = forms.CharField(required=True)
     email = forms.CharField(required=True)
     payment_type = forms.ChoiceField(choices=payment_list, required=True)
@@ -25,6 +27,10 @@ class CheckoutBuyerForm(forms.Form):
         cleaned_data = super().clean()
         phone = self.cleaned_data.get('phone')
         email = self.cleaned_data.get('email')
+        phone_regex = r'^\+380\d{9}$'
+        if not re.match(phone_regex, phone):
+            raise forms.ValidationError('Номер телефону має починатись на +380 і мати 12 цифр в загалом.')
+
         if Customers.objects.filter(email=email).exclude(phone=phone).exists() \
                 or Customers.objects.filter(phone=phone).exclude(email=email).exists():
             raise forms.ValidationError('Почта та номер телефону вже використовувались у системі та не співпадають')

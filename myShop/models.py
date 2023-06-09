@@ -161,7 +161,7 @@ class Customers(models.Model):
     last_name = models.CharField(max_length=20)
     email = models.CharField(max_length=30, null=True, unique=True)
     address = models.CharField(max_length=20, null=True, default=None)
-    phone = models.IntegerField(null=True, default=None, unique=True)
+    phone = models.CharField(max_length=13, null=True, default=None, unique=True)
 
     def __str__(self):
         return self.name
