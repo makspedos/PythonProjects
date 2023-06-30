@@ -78,14 +78,14 @@ WSGI_APPLICATION = 'My_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shop',
+        'NAME': 'myshop',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'Djangodotpy2003',
         'PORT': 3306,
         'OPTIONS': {
-            'sql_mode': 'traditional',
-        }
+            'charset': 'utf8mb4',  # Character set used by the database
+        },
     }
 }
 
@@ -130,4 +130,3 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SESSION_COOKIE_AGE = 5

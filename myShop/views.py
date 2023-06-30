@@ -26,6 +26,10 @@ def home(request):
         max_price = form.cleaned_data.get('max_price')
         if min_price and max_price:
             queryset = queryset.filter(product__price__range=(min_price, max_price))
+        if min_price:
+            queryset = queryset.filter(product__price__gte=min_price)
+        if max_price:
+            queryset = queryset.filter(product__price__lte=max_price)
 
         category = form.cleaned_data.get('category')
         print(category)
@@ -105,7 +109,6 @@ def generate_pdf(request):
     # Build the PDF document and save it to the response
     elements = [title, table]
     doc.build(elements)
-
     return response
 
 
@@ -134,14 +137,23 @@ def checkout(request):
     if request.POST:
         print(request.POST)
         if form.is_valid():
-            print('Yes')
             pdf = True
             data = request.POST
             name = data.get("name", 'user')
             last_name = data.get("last_name", ' ')
             phone = data.get("phone", '')
+            phone_regex = r'^\+380\d{9}$'
+            if not re.match(phone_regex, phone):
+                form.add_error('phone', 'Номер телефону має починатись на +380 і мати 12 цифр в загалом.')
+                return render(request, 'myShop/checkout.html', locals())
+
             address = data.get("address", ' ')
             email = data['email']
+            if Customers.objects.filter(email=email).exclude(phone=phone).exists() \
+                    or Customers.objects.filter(phone=phone).exclude(email=email).exists():
+                form.add_error('email', 'Почта та номер телефону вже використовувались у системі та не співпадають.')
+                return render(request, 'myShop/checkout.html', locals())
+
             delivery_type = data['delivery_type']
             payment_type = data.get('payment_type', 'Cash')
             customer, created = Customers.objects.get_or_create(email=email,  defaults={'name': name,
@@ -166,7 +178,7 @@ def checkout(request):
 
             is_any_product = False
         else:
-            print('no')
+            print('Error')
 
     return render(request, 'myShop/checkout.html', locals())
 

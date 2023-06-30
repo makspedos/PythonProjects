@@ -12,7 +12,6 @@ class CheckoutBuyerForm(forms.Form):
     delivery_list = [('Відділення "Нова почта"', 'Відділення "Нова почта"'), ("Кур`єр", "Кур`єр")]
     payment_list = [('Готівка', 'Готівка'), ('Кредитна карта', 'Кредитна карта')]
 
-
     name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     phone = forms.CharField(required=True)
@@ -22,20 +21,6 @@ class CheckoutBuyerForm(forms.Form):
     delivery_type = forms.ChoiceField(choices=delivery_list, required=True)
     delivery_list = [('Відділення "Нова почта"', 'Відділення "Нова почта"'), ("Кур`єр", "Кур`єр")]
     payment_list = [('Готівка', 'Готівка'), ('Кредитна карта', 'Кредитна карта')]
-
-    def clean(self):
-        cleaned_data = super().clean()
-        phone = self.cleaned_data.get('phone')
-        email = self.cleaned_data.get('email')
-        phone_regex = r'^\+380\d{9}$'
-        if not re.match(phone_regex, phone):
-            raise forms.ValidationError('Номер телефону має починатись на +380 і мати 12 цифр в загалом.')
-
-        if Customers.objects.filter(email=email).exclude(phone=phone).exists() \
-                or Customers.objects.filter(phone=phone).exclude(email=email).exists():
-            raise forms.ValidationError('Почта та номер телефону вже використовувались у системі та не співпадають')
-        return cleaned_data
-
 
     class Meta:
         model = Customers
@@ -60,6 +45,6 @@ class ProductFilterForm(forms.Form):
     product_name = forms.CharField(required=False, label='Назва товару')
     min_price = forms.DecimalField(required=False, label='Мінімальна ціна')
     max_price = forms.DecimalField(required=False, label='Максимальна ціна')
-    brand = forms.ChoiceField(choices=list_brands, widget=forms.RadioSelect, required=False, label='Бренд')
-    category = forms.ChoiceField(choices=list_categories, widget=forms.RadioSelect, required=False, label='Категорія')
-    size = forms.ChoiceField(choices=list_size, required=False, label='Розміри')
+    brand = forms.ChoiceField(choices=list_brands, label='Бренд', widget=forms.RadioSelect, required=False)
+    category = forms.ChoiceField(choices=list_categories, label='Категорія', widget=forms.RadioSelect, required=False, )
+    size = forms.ChoiceField(choices=list_size, label='Розміри', required=False, )

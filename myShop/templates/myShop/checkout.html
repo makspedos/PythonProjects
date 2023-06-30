@@ -57,13 +57,7 @@
                 <div class="text-left">
                     {% if form.errors %}
                     <div class="alert alert-danger" style="display: inline-block;">
-                        <ul>
-                            {% for field_errors in form.errors.values %}
-                                {% for error in field_errors %}
-                                    <li>{{ error }}</li>
-                                {% endfor %}
-                            {% endfor %}
-                        </ul>
+                            Помилка при обробці даних
                     </div>
                 {% endif %}
                 </div>

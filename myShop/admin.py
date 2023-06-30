@@ -16,7 +16,6 @@ class ProductInOrderInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
 
-
 class CustomersAdmin(admin.ModelAdmin):
     list_display = ('name', 'last_name', 'email', 'phone', 'address')
 
